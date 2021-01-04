@@ -1,0 +1,13 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!*blocks
+!*blocks/ezee_report
+!*blocks/ezee_report/*
+!*blocks/ezee_staff
+!*blocks/ezee_staff/*
+!*local
+!*local/message
+!*local/message/*
