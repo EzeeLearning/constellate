@@ -2,6 +2,7 @@
 *
 
 # But not these files...
+!README.md
 !.gitignore
 !*blocks
 !*blocks/ezee_report
