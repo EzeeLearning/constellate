@@ -19,7 +19,7 @@ class block_ezee_report extends block_base {
     }
 
     function get_content() {
-        global $CFG, $DB, $USER, $PAGE;
+        global $CFG, $DB, $USER, $PAGE, $OUTPUT;
 
         //Prevent JS caching
         //$CFG->cachejs = false;
@@ -70,9 +70,9 @@ class block_ezee_report extends block_base {
         $resultsuserJSON = json_encode(array_values($resultsuser));
 
         //Pass variables to js file
-        $PAGE->requires->js_init_call('loadSummaryGraph', $resultssummary);
+        $PAGE->requires->js_init_call('loadPercentageGraph', $resultssummary);
         $PAGE->requires->js_init_call('loadUserGraph', array($resultsuserJSON));
-
+        $PAGE->requires->js_init_call('loadDateGraph', array($resultsuserJSON));
 
         //Setup and display block
         if ($this->content !== NULL) {
@@ -83,43 +83,26 @@ class block_ezee_report extends block_base {
         $showcourses = get_config('block_ezee_report', 'showcourses');
 
         //Build content
-        $content = '';
         if ($showcourses) {
-            $courses = $DB->get_records('course');
-            foreach ($courses as $course) {
-                $content .= $course->fullname . '<br>';
-            }
+
         }
         else {
-            $users = $DB->get_records('user');
-            foreach ($users as $user) {
-                $content .= $user->firstname . ' ' . $user->lastname . '<br>';
-            }
+
         }
 
         $staffCount = count($resultsuser);
         $courses = array_values($resultssummary)[0];
 
         //Render content
+        $templatecontext = (object)[
+            'manager' => $USER->firstname . ' ' . $USER->lastname,
+            'staffcount' => $staffCount,
+            'coursetotal' => $courses->totalcourses,
+            'logourl' => new moodle_url('/blocks/ezee_report/constellate.png')
+        ];
+
         $this->content = new stdClass;
-        $this->content->text = '
-        <h2>Manager: John Stainsby</h2>
-        <h3>Staff: ' . $staffCount . '</h3>
-        <h3>Assigned Courses: ' . $courses->totalcourses . '</h3>
-        <hr>
-        <br>
-            <div style="width:50%;display:inline-block">
-                <canvas id="SummaryChart"></canvas>
-            </div>
-            <div style="width:50%;float:right">
-                <canvas id="UserChart"></canvas>
-            </div>
-            <div style="margin-top:50px;">
-                <canvas id="TestChart"></canvas>
-            </div>
-        ';
-        $this->content->footer = '';
+        $this->content->text = $OUTPUT->render_from_template('block_ezee_report/dashboard', $templatecontext);
         return $this->content;
     }
-
 }

@@ -1,0 +1,22 @@
+<table class="constellate-staff-list">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Assigned</th>
+        <th>Completed</th>
+        <th>% Completion</th>
+        <th></th>
+    </tr>
+    {{#users}}
+    <tr>
+        <td>{{firstname}}</td>
+        <td>{{lastname}}</td>
+        <td>{{email}}</td>
+        <td class="center-value">{{assignedcourses}}</td>
+        <td class="center-value">{{completedcourses}}</td>
+        <td class="center-value">{{completionpercentage}}%</td>
+        <td class="center-value"><a class="btn btn-primary btn-constellate" href='{{profileurl}}?id={{id}}' target='_blank'>View</a></td>
+    </tr>
+    {{/users}}
+</table>
