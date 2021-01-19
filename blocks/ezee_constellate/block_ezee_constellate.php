@@ -35,16 +35,17 @@ class block_ezee_constellate extends block_base {
         //Get information from database
         $db_query = new db_query;
         $resultssummary = $db_query->dashboardTotals();
-
         $resultsstaff = $db_query->staffList();
-        $staffJSON = json_encode(array_values($resultsstaff));
+
+        $resultscourses = $db_query->courseList();
+        $coursesJSON = json_encode(array_values($resultscourses));
 
         $resultsactivity = $db_query->activityDates();
         $activityJSON = json_encode(array_values($resultsactivity));
 
         //Pass variables to js file
         $PAGE->requires->js_init_call('loadPercentageGraph', $resultssummary);
-        $PAGE->requires->js_init_call('loadUserGraph', array($staffJSON));
+        $PAGE->requires->js_init_call('loadCourseGraph', array($coursesJSON));
         $PAGE->requires->js_init_call('loadDateGraph', array($activityJSON));
 
         //Setup and display block

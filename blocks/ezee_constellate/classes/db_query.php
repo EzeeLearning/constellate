@@ -21,6 +21,7 @@ class db_query {
     //Staff list for table
     public function staffList() {
         global $DB;
+
         $sqlstaff = "SELECT Id, FirstName, LastName, DisplayName, Email, AssignedCourses, CompletedCourses, ROUND((CompletedCourses / AssignedCourses) * 100) AS CompletionPercentage
         FROM (SELECT u.id, u.firstname AS FirstName , u.lastname AS LastName, CONCAT(u.firstname, ' ', u.lastname) AS DisplayName, u.email AS Email, COUNT(DISTINCT ra.id) AS AssignedCourses,
         SUM(CASE  WHEN gi.grademax >= gg.rawgrade || gi.gradepass >= gg.rawgrade AND gg.rawgrade IS NOT NULL THEN 1 ELSE 0 END) AS CompletedCourses
@@ -39,6 +40,25 @@ class db_query {
         //return $DB->get_records_sql($sqlstaff, $params);
 
         return $DB->get_records_sql($sqlstaff, []);
+    }
+
+    //Course list for table
+    public function courseList() {
+        global $DB;
+
+        $sqlcourses = "SELECT c.shortname, COUNT(DISTINCT ra.userid) AS Users
+        FROM mdl_course AS c
+        JOIN mdl_context AS ctx ON c.id = ctx.instanceid
+        JOIN mdl_role_assignments AS ra ON ra.contextid = ctx.id
+        JOIN mdl_user AS u ON u.id = ra.userid
+        LEFT OUTER JOIN mdl_grade_grades AS gg ON gg.userid = u.id
+        LEFT OUTER JOIN mdl_grade_items AS gi ON gi.id = gg.itemid AND gi.courseid = c.id
+        WHERE ra.roleid = 5 
+        GROUP BY c.shortname
+        ORDER BY Users DESC
+        LIMIT 10";
+    
+        return $DB->get_records_sql($sqlcourses, []);
     }
 
     //Activity dates for chart

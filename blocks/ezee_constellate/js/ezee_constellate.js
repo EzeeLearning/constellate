@@ -12,7 +12,7 @@ function loadPercentageGraph(Y, d) {
                     labels: ['Completed', 'Incomplete'],
                     datasets: [{
                         data: [parseInt(dataSummary.completedcourses), (parseInt(dataSummary.assignedcourses) - parseInt(dataSummary.completedcourses))],
-                        backgroundColor: ['#241168', '#eaeaea'],
+                        backgroundColor: ['#4a98bb', '#eaeaea'],
                         borderColor: 'rgba(255, 255, 255, 0.1)',
                         borderWidth: 2
                     }]
@@ -44,30 +44,30 @@ function loadPercentageGraph(Y, d) {
 }
 
 
-function loadUserGraph(Y, d) {
-    var dataUser = JSON.parse(d);
+function loadCourseGraph(Y, d) {
+    var dataCourse = JSON.parse(d);
     var chartData = [];
     var chartLabels = [];
 
     setTimeout(function () {
-        if (dataUser != null) {
-            for (var i = 0; i < dataUser.length; i++) {
-                chartLabels.push(dataUser[i].displayname);
-                chartData.push(parseInt(dataUser[i].completedcourses));
+        if (dataCourse != null) {
+            for (var i = 0; i < dataCourse.length; i++) {
+                chartLabels.push(dataCourse[i].shortname);
+                chartData.push(parseInt(dataCourse[i].users));
             }
 
-            new Chart(document.getElementById('UserChart').getContext('2d'), {
+            new Chart(document.getElementById('CourseChart').getContext('2d'), {
                 type: 'horizontalBar',
                 data: {
                     datasets: [{
                         data: chartData,
-                        backgroundColor: '#57c5d7'
+                        backgroundColor: '#303e83'
                     }]
                 },
                 options: {
                     title: {
                         display: true,
-                        text: 'User Completions'
+                        text: 'Top Course Enrolments'
                     },
                     scales: {
                         yAxes: [{
@@ -145,7 +145,7 @@ function loadDateGraph(Y, d) {
             options: {
                 title: {
                     display: true,
-                    text: 'Activity (last 12 months)',
+                    text: 'Staff Activity (last 12 months)',
                     fontColor: '#797979'
                 },
                 scales: {
