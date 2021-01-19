@@ -1,8 +1,7 @@
 <?php
 
 $capabilities = array(
- 
-    'block/ezee_staff:myaddinstance' => array(
+    'block/ezee_constellate:myaddinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
@@ -12,7 +11,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
     ),
  
-    'block/ezee_staff:addinstance' => array(
+    'block/ezee_constellate:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
  
         'captype' => 'write',

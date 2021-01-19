@@ -1,10 +1,12 @@
 function loadPercentageGraph(Y, d) {
     var dataSummary = d;
+    console.log("loadPercentageGraph");
+
     console.log(dataSummary);
 
     setTimeout(function () {
         if (dataSummary != null) {
-            var percentage = (parseInt(dataSummary.completedcourses) / parseInt(dataSummary.totalcourses)) * 100;
+            var percentage = (parseInt(dataSummary.completedcourses) / parseInt(dataSummary.assignedcourses)) * 100;
             $('#ChartPercentage').text(percentage + '%');
 
             new Chart(document.getElementById('PercentageChart').getContext('2d'), {
@@ -12,7 +14,7 @@ function loadPercentageGraph(Y, d) {
                 data: {
                     labels: ['Completed', 'Incomplete'],
                     datasets: [{
-                        data: [parseInt(dataSummary.completedcourses), (parseInt(dataSummary.totalcourses) - parseInt(dataSummary.completedcourses))],
+                        data: [parseInt(dataSummary.completedcourses), (parseInt(dataSummary.assignedcourses) - parseInt(dataSummary.completedcourses))],
                         backgroundColor: ['#241168', '#eaeaea'],
                         borderColor: 'rgba(255, 255, 255, 0.1)',
                         borderWidth: 2
@@ -22,7 +24,7 @@ function loadPercentageGraph(Y, d) {
                     cutoutPercentage: 50,
                     title: {
                         display: true,
-                        text: 'Team Completion'
+                        text: 'Team Course Completion'
                     },
                     legend: {
                         display: false,
@@ -47,6 +49,8 @@ function loadPercentageGraph(Y, d) {
 
 function loadUserGraph(Y, d) {
     var dataUser = JSON.parse(d);
+    console.log("loadUserGraph");
+
     console.log(dataUser);
 
     var chartData = [];
@@ -109,6 +113,7 @@ function loadUserGraph(Y, d) {
 
 function loadDateGraph(Y, d) {
     var dataDates = JSON.parse(d);
+    console.log("loadDateGraph");
     console.log(dataDates);
 
     setTimeout(function () {

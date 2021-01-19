@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  
 /**
- * @package   block_ezee_report
+ * @package   block_ezee_constellate
  * @copyright 2020, John Stainsby <john@ezeedigital.co.uk>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -24,7 +24,7 @@ defined('MOODLE_INTERNAL') || die();
  
 $plugin->version = 2020100100;              // Version of the plugin in YYYYMMDDXX where XX is incrementing number
 $plugin->requires = 2020061502;             // Specifies the minimum version number of Moodle core that this plugin requires
-$plugin->component = 'block_ezee_report';   // Type and name of plugin e.g. quiz module = mod_quiz
+$plugin->component = 'block_ezee_constellate';   // Type and name of plugin e.g. quiz module = mod_quiz
 $plugin->maturity = MATURITY_ALPHA;         // Stablity of plugin (MATURITY_ALPHA, MATURITY_BETA, MATURITY_RC or MATURITY_STABLE)
 $plugin->release = 'Testing_0_0';           // Release version name
 

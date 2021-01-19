@@ -5,10 +5,8 @@
 !README.md
 !.gitignore
 !*blocks
-!*blocks/ezee_report
-!*blocks/ezee_report/**
-!*blocks/ezee_staff
-!*blocks/ezee_staff/**
+!*blocks/ezee_constellate
+!*blocks/ezee_constellate/**
 !*local
 !*local/message
 !*local/message/**

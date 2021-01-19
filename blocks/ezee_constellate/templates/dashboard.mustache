@@ -1,0 +1,88 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+
+<h2 class="constellate-manager-name">Manager: {{manager}}</h2>
+<div class="constellate-dashboard-panel-container">
+    <div class="constellate-dashboard-panel constellate-color1">
+        <i class="fas fa-users"></i>
+        <div>
+            <span class="constellate-panel-number">{{staffcount}}</span>
+            <span class="constellate-panel-text">Assigned Staff</span>
+        </div>
+    </div>
+    <div class="constellate-dashboard-panel constellate-color2">
+        <i class="fas fa-graduation-cap"></i>
+        <div>
+            <span class="constellate-panel-number">{{coursetotal}}</span>
+            <span class="constellate-panel-text">Assigned Courses</span>
+        </div>
+    </div>
+    <div class="constellate-dashboard-panel constellate-color3">
+        <i class="fas fa-list-alt"></i>
+        <div>
+            <span class="constellate-panel-number">2</span>
+            <span class="constellate-panel-text">Learning Plans</span>
+        </div>
+    </div>
+</div>
+<!-- <img class="constellate-logo" src='{{logourl}}' style="display:none" /> -->
+
+<hr class="constellate-separator">
+
+<div class="constellate-chart-container">
+    <div id="ChartPercentage" class="chart-percentage-label"></div>
+    <canvas id="PercentageChart"></canvas>
+</div>
+<div class="constellate-chart-container">
+    <canvas id="UserChart"></canvas>
+</div>
+
+<hr class="constellate-separator">
+
+<div id="constellate-activity-chart" class="constellate-chart-container-wide {{graphdisplay}}">
+    <canvas id="DateChart"></canvas>
+</div>
+
+<table id="constellate-staff-table" class="constellate-staff-list {{tabledisplay}}">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Assigned</th>
+        <th>Completed</th>
+        <th>% Completion</th>
+        <th></th>
+    </tr>
+    {{#tableusers}}
+    <tr>
+        <td>{{firstname}}</td>
+        <td>{{lastname}}</td>
+        <td>{{email}}</td>
+        <td class="center-value">{{assignedcourses}}</td>
+        <td class="center-value">{{completedcourses}}</td>
+        <td class="center-value">{{completionpercentage}}%</td>
+        <td class="center-value"><a class="btn btn-primary btn-constellate" href='{{profileurl}}?id={{id}}'
+                target="_blank">View</a></td>
+    </tr>
+    {{/tableusers}}
+</table>
+
+<br>
+
+<a id="constellate-toggle-btn" class="btn btn-primary btn-constellate" href='javascript: ToggleView();'>Show Activity</a>
+
+<script type="text/javascript">
+
+    function ToggleView() {
+        if ($('#constellate-staff-table').is(':visible')){
+            $('#constellate-staff-table').hide();
+            $('#constellate-activity-chart').show();
+            $('#constellate-toggle-btn').text('Show Staff');
+        }
+        else{
+            $('#constellate-staff-table').show();
+            $('#constellate-activity-chart').hide();
+            $('#constellate-toggle-btn').text('Show Activity');
+        }
+    }
+
+</script>

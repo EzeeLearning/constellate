@@ -1,0 +1,233 @@
+ 
+/* Colours */
+.constellate-color1 {
+    background-color:#57c5d7;
+}
+.constellate-color2 {
+    background-color:#4a98bb;
+}
+.constellate-color3 {
+    background-color:#3d6b9f;
+}
+.constellate-color4 {
+    background-color:#303e83;
+}
+.constellate-color5 {
+    background-color:#241168;
+}
+.constellate-color-gradient {
+    background-color:#241168;
+    background: linear-gradient(to right, #57c5d7, #241168);
+}
+
+
+/* Dashboards */
+.constellate-dashboard-info {
+    display: inline-block;
+    width: 100%;
+}
+
+/* .constellate-logo {
+    width: 130px;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+} */
+
+.constellate-manager-name {
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    font-size: calc(0.9271875rem + 0.32625vw);
+}
+
+.block_with_controls .constellate-manager-name {
+    display: none;
+}
+
+.constellate-dashboard-panel-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.constellate-dashboard-panel {
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    flex: 1 1 0%;
+    height: 70px;
+}
+
+.constellate-dashboard-panel>i,
+.constellate-dashboard-panel>div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 50%;
+}
+
+.constellate-dashboard-panel i {
+    font-size: 34px;
+    height: 34px;
+    color: white;
+}
+
+.constellate-dashboard-panel div {
+    left: 40%;
+    height: 100%;
+    width: 60%;
+    text-align: center;
+    overflow: hidden;
+    color: white;
+}
+
+.constellate-dashboard-panel:not(:last-of-type) {
+    margin-right: 10px;
+}
+
+.constellate-panel-number {
+    display: block;
+    font-size: 26px;
+}
+
+.constellate-panel-text {
+    font-size: 14px;
+}
+
+
+/* Charts */
+.constellate-chart-container {
+    position: relative;
+    width: 49%;
+    display: inline-block;
+}
+
+.constellate-chart-container .chart-percentage-label {
+    position: absolute;
+    top: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 40px;
+    height: 20px;
+    text-align: center;
+}
+
+.constellate-chart-container-wide {
+    margin-top: 50px;
+}
+
+.constellate-chart-container-wide.hidden {
+    display: none;
+}
+
+
+/* Button */
+.btn-constellate {
+    background-color: #241168 !important;
+    border-color: #241168 !important;
+    color: #fff !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.constellate-separator {
+    margin: 1.75rem;
+}
+
+
+/* Table */
+.constellate-staff-list {
+    border-collapse: collapse;
+    border: 1px solid #eee;
+    border-bottom: 2px solid #57c5d7;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.constellate-staff-list.hidden {
+    display: none;
+}
+
+.constellate-staff-list tr:hover {
+    background: #f4f4f4;
+}
+
+.constellate-staff-list tr:hover td {
+    color: #555;
+}
+
+.constellate-staff-list th,
+.constellate-staff-list td {
+    color: #797979;
+    border: 1px solid #eee;
+    border-collapse: collapse;
+    padding: .625em;
+}
+
+.constellate-staff-list th {
+    background: #57c5d7;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.constellate-staff-list th.last {
+    border-right: none;
+}
+
+.constellate-staff-list .center-value {
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+
+    table caption {
+        font-size: 14px;
+    }
+
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: 14px;
+        text-align: right;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
+
+    .constellate-staff-list .center-value {
+        text-align: right;
+    }
+
+}
