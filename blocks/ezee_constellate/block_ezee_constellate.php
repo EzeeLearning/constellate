@@ -8,6 +8,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+include $CFG->dirroot . '/blocks/ezee_constellate/classes/db_query.php';
+
 class block_ezee_constellate extends block_base {
 
     function init() {
@@ -19,49 +21,31 @@ class block_ezee_constellate extends block_base {
     }
 
     function get_content() {
-        global $CFG, $DB, $USER, $PAGE, $OUTPUT;
+        if ($this->content != null) {
+            return $this->content;
+        }
 
-        //Prevent JS caching
-        //$CFG->cachejs = false;
+        global $CFG, $USER, $PAGE, $OUTPUT;
 
         //Add jquery and js files
         $PAGE->requires->jquery();
         $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/ezee_constellate.js'));
         $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/Chart.bundle.js'), true);
 
-        //Summary totals
-        $sqlsummary = "SELECT COUNT(DISTINCT ra.contextId) AS TotalCourses, COUNT(DISTINCT ra.id) AS AssignedCourses,
-        SUM(CASE WHEN gi.grademax >= gg.rawgrade || gi.gradepass >= gg.rawgrade AND gg.rawgrade IS NOT NULL THEN 1 ELSE 0 END) AS CompletedCourses             
-        FROM mdl_course AS c
-        JOIN mdl_context AS ctx ON c.id = ctx.instanceid
-        JOIN mdl_role_assignments AS ra ON ra.contextid = ctx.id
-        JOIN mdl_user AS u ON u.id = ra.userid
-        LEFT OUTER JOIN mdl_grade_grades AS gg ON gg.userid = u.id
-        LEFT OUTER JOIN mdl_grade_items AS gi ON gi.id = gg.itemid AND gi.courseid = c.id
-        WHERE ra.roleid = 5";
-        $resultssummary = $DB->get_records_sql($sqlsummary, []);
+        //Get information from database
+        $db_query = new db_query;
+        $resultssummary = $db_query->dashboardTotals();
 
-        //Staff list for table
-        $sqlstaff = "SELECT Id, FirstName, LastName, DisplayName, Email, AssignedCourses, CompletedCourses, ROUND((CompletedCourses / AssignedCourses) * 100) AS CompletionPercentage
-        FROM (SELECT u.id, u.firstname AS FirstName , u.lastname AS LastName, CONCAT(u.firstname, ' ', u.lastname) AS DisplayName, u.email AS Email, COUNT(DISTINCT ra.id) AS AssignedCourses,
-        SUM(CASE  WHEN gi.grademax >= gg.rawgrade || gi.gradepass >= gg.rawgrade AND gg.rawgrade IS NOT NULL THEN 1 ELSE 0 END) AS CompletedCourses
-        FROM mdl_course AS c
-        JOIN mdl_context AS ctx ON c.id = ctx.instanceid
-        JOIN mdl_role_assignments AS ra ON ra.contextid = ctx.id
-        JOIN mdl_user AS u ON u.id = ra.userid
-        LEFT OUTER JOIN mdl_grade_grades AS gg ON gg.userid = u.id
-        LEFT OUTER JOIN mdl_grade_items AS gi ON gi.id = gg.itemid AND gi.courseid = c.id
-        WHERE ra.roleid = 5 
-        GROUP BY u.id) s
-        ORDER BY CompletionPercentage DESC, LastName";
-        $params = [ 'userid' => $USER->id ];
-        $resultsstaff = $DB->get_records_sql($sqlstaff, $params);
-        $resultstaffJSON = json_encode(array_values($resultsstaff));
+        $resultsstaff = $db_query->staffList();
+        $staffJSON = json_encode(array_values($resultsstaff));
+
+        $resultsactivity = $db_query->activityDates();
+        $activityJSON = json_encode(array_values($resultsactivity));
 
         //Pass variables to js file
         $PAGE->requires->js_init_call('loadPercentageGraph', $resultssummary);
-        $PAGE->requires->js_init_call('loadUserGraph', array($resultstaffJSON));
-        $PAGE->requires->js_init_call('loadDateGraph', array($resultstaffJSON));
+        $PAGE->requires->js_init_call('loadUserGraph', array($staffJSON));
+        $PAGE->requires->js_init_call('loadDateGraph', array($activityJSON));
 
         //Setup and display block
         if ($this->content !== NULL) {
@@ -70,23 +54,14 @@ class block_ezee_constellate extends block_base {
 
         //Get settings
         $showactivity = get_config('block_ezee_constellate', 'showactivity');
-        $graphDisplay = "hidden";
-        $tableDisplay = "";
-
-        //Build content
-        if ($showactivity) {
-            $graphDisplay = "";
-            $tableDisplay = "hidden";
-        }
-
-        $staffCount = count($resultsstaff);
-        $courses = array_values($resultssummary)[0];
+        $graphDisplay = $showactivity ? "visible" : "hidden";
+        $tableDisplay = $showactivity ? "hidden" : "visible";
 
         //Render content
         $templatecontext = (object)[
             'manager' => $USER->firstname . ' ' . $USER->lastname,
-            'staffcount' => $staffCount,
-            'coursetotal' => $courses->totalcourses,
+            'staffcount' => count($resultsstaff),
+            'coursetotal' => array_values($resultssummary)[0]->totalcourses,
             'tableusers' => array_values($resultsstaff),
             'profileurl' => new moodle_url('/user/profile.php'),
             'logourl' => new moodle_url('/blocks/ezee_constellate/constellate.png'),
