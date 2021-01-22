@@ -1,0 +1,23 @@
+<table id="constellate-staff-table" class="constellate-staff-list {{tabledisplay}}">
+    <tr>
+        <th>Name</th>
+        <th>Progress</th>
+        <th style="width: 15%">% Completion</th>
+        <th style="width: 15%">Logins</th>
+        <th style="width: 15%">Course Views</th>
+    </tr>
+    {{#tableusers}}
+    <tr>
+        <td><a href='{{profileurl}}?id={{id}}' target="_blank">{{firstname}} {{lastname}} <i class="fas fa-external-link-alt"></i></a></td>
+        <td class="center-value" title="User has completed {{completedcourses}} out of {{assignedcourses}} courses">
+            <div class="constellate-progress-container">
+                <div class="constellate-progress-bar {{progressclass}}" style="width:{{completionpercentage}}%">
+                </div>
+            </div>
+        </td>
+        <td class="center-value">{{completionpercentage}}%</td>
+        <td class="center-value">{{logins}}</td>
+        <td class="center-value">{{courseviews}}</td>
+    </tr>
+    {{/tableusers}}
+</table>

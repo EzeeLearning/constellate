@@ -1,17 +1,16 @@
 function loadPercentageGraph(Y, d) {
-    var dataSummary = d;
+    var dataJSON = d;
 
     setTimeout(function () {
-        if (dataSummary != null) {
-            var percentage = (parseInt(dataSummary.completedcourses) / parseInt(dataSummary.assignedcourses)) * 100;
-            $('#ChartPercentage').text(percentage + '%');
+        if (dataJSON != null) {
+            $('#ChartPercentage').text(dataJSON.completionpercentage + '%');
 
             new Chart(document.getElementById('PercentageChart').getContext('2d'), {
                 type: 'pie',
                 data: {
                     labels: ['Completed', 'Incomplete'],
                     datasets: [{
-                        data: [parseInt(dataSummary.completedcourses), (parseInt(dataSummary.assignedcourses) - parseInt(dataSummary.completedcourses))],
+                        data: [parseInt(dataJSON.completedcourses), (parseInt(dataJSON.assignedcourses) - parseInt(dataJSON.completedcourses))],
                         backgroundColor: ['#4a98bb', '#eaeaea'],
                         borderColor: 'rgba(255, 255, 255, 0.1)',
                         borderWidth: 2
@@ -40,20 +39,20 @@ function loadPercentageGraph(Y, d) {
                 }
             });
         }
-    }, 100);
+    }, 200);
 }
 
 
 function loadCourseGraph(Y, d) {
-    var dataCourse = JSON.parse(d);
+    var dataJSON = JSON.parse(d);
     var chartData = [];
     var chartLabels = [];
 
     setTimeout(function () {
-        if (dataCourse != null) {
-            for (var i = 0; i < dataCourse.length; i++) {
-                chartLabels.push(dataCourse[i].shortname);
-                chartData.push(parseInt(dataCourse[i].users));
+        if (dataJSON != null) {
+            for (var i = 0; i < dataJSON.length; i++) {
+                chartLabels.push(dataJSON[i].coursename);
+                chartData.push(parseInt(dataJSON[i].users));
             }
 
             new Chart(document.getElementById('CourseChart').getContext('2d'), {
@@ -100,14 +99,15 @@ function loadCourseGraph(Y, d) {
                 }
             });
         }
-    }, 100);
+    }, 200);
 }
 
 
 function loadDateGraph(Y, d) {
-    var dataDates = JSON.parse(d);
+    var dataJSON = JSON.parse(d);
     var lineMonths = [];
-    var lineData = [];
+    var lineData1 = [];
+    var lineData2 = [];
 
     //Get month dates for line graph
     var d = new Date(),
@@ -121,18 +121,26 @@ function loadDateGraph(Y, d) {
     }
 
     for (var i = 0; i < lineMonths.length; i++) {
-        $.each(dataDates, function (k, d) {
-            if (months[d.months-1] == lineMonths[i]) {
-                lineData.push(parseInt(d.logins));
+        $.each(dataJSON, function (k, d) {
+            if (months[d.month-1] == lineMonths[i]) {
+                lineData1.push(parseInt(d.logins));
+                lineData2.push(parseInt(d.accesses));
             }
         });
     }  
 
     var datasets = [{
-        label: 'Logins',
-        data: lineData.reverse(),
+        label: 'User Logins',
+        data: lineData1.reverse(),
         backgroundColor: '#57c5d7',
         borderColor: '#57c5d7',
+        fill: false
+    },
+    {
+        label: 'Course Access',
+        data: lineData2.reverse(),
+        backgroundColor: '#3d6b9f',
+        borderColor: '#3d6b9f',
         fill: false
     }]
 
@@ -181,5 +189,5 @@ function loadDateGraph(Y, d) {
                 }
             }
         });
-    }, 100);
+    }, 1000);
 }

@@ -1,0 +1,35 @@
+<br>
+
+<a id="constellate-toggle-btn" class="btn btn-primary btn-constellate" href='javascript: ToggleView();'>Show Activity</a>
+<!-- <a id="constellate-toggle-btn" class="btn btn-primary btn-constellate" href='javascript: printDiv();'>Export PDF</a> -->
+
+<script type="text/javascript">
+    function ToggleView() {
+        if ($('#constellate-staff-table').is(':visible')) {
+            $('#constellate-staff-table').hide();
+            $('#constellate-activity-chart').show();
+            $('#constellate-toggle-btn').text('Show Staff');
+        } else {
+            $('#constellate-staff-table').show();
+            $('#constellate-activity-chart').hide();
+            $('#constellate-toggle-btn').text('Show Activity');
+        }
+    }
+
+    function printDiv() {
+
+        let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
+
+        mywindow.document.write(`<html><head><title>Ezee Constellate Dashboard</title>`);
+        mywindow.document.write('</head><body>');
+        mywindow.document.write(document.getElementById('constellate-dashboard').innerHTML);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+
+        mywindow.print();
+
+        return true;
+    }
+</script>

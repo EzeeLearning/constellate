@@ -18,3 +18,8 @@ $string['showactivitydesc'] = 'Choose whether to show staff list table or staff 
 
 $string['learningplan'] = 'Align To Learning Plans';
 $string['learningplandesc'] = 'Display staff completion and statistics based on learning plans rather than assigned courses.';
+
+$string['staff_zero'] = 'None of your staff have completed courses, check your Constellate dashboard to improve your team\'s compliance.';
+$string['staff_low'] = 'Your team course completion is low, check your Constellate dashboard to improve your team\'s compliance.';
+$string['staff_medium'] = 'Your team\'s compliance is improving, check your Constellate dashboard to keep it going.';
+$string['staff_high'] = 'Check your Constellate dashboard to improve your team\'s compliance.';
