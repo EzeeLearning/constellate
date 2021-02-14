@@ -13,4 +13,10 @@ if ($ADMIN->fulltree) {
         get_string('learningplan', 'block_ezee_constellate'),
         get_string('learningplandesc', 'block_ezee_constellate'),
         0));
+
+    //FOR TESTING: Display all staff on the dashboard instead of just the current manager's staff
+    $settings->add(new admin_setting_configcheckbox('block_ezee_constellate/staffmode',
+        get_string('staffmode', 'block_ezee_constellate'),
+        get_string('staffmodedesc', 'block_ezee_constellate'),
+        0));
 }

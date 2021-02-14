@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Form for editing Ezee Constellate instances.
+ * Ezee Constellate dashboard
  *
  * @package   block_ezee_constellate
- * @copyright 2020, John Stainsby <john@ezeedigital.co.uk>
+ * @copyright 2021, John Stainsby <john@ezeedigital.co.uk>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,13 +34,15 @@ class block_ezee_constellate extends block_base {
 
         //Get information from database
         $db_query = new db_query;
-        $resultssummary = $db_query->dashboardTotals();
+        $planMode = get_config('block_ezee_constellate', 'learningplan');
+        $staffMode = get_config('block_ezee_constellate', 'staffmode');
+
+        $resultssummary = $db_query->dashboardTotals($staffMode);
         $resultvalues = array_values($resultssummary)[0];
 
-        $planMode = get_config('block_ezee_constellate', 'learningplan');
-        $resultsstaff = $db_query->staffList($planMode);
+        $resultsstaff = $db_query->staffList($planMode, $staffMode);
 
-        $resultscourses = $db_query->courseList();
+        $resultscourses = $db_query->courseList($staffMode);
         $coursesJSON = json_encode(array_values($resultscourses));
 
         $resultsactivity = $db_query->activityDates();
@@ -86,6 +88,7 @@ class block_ezee_constellate extends block_base {
             'learningplans' => array_values($resultssummary)[0]->learningplans,
             'tableusers' => array_values($resultsstaff),
             'profileurl' => new moodle_url('/user/profile.php'),
+            'planurl' => new moodle_url('/admin/tool/lp/plans.php'),
             'logourl' => new moodle_url('/blocks/ezee_constellate/constellate.png'),
             'graphdisplay' => $graphDisplay,
             'tabledisplay' => $tableDisplay

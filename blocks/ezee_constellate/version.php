@@ -16,7 +16,7 @@
  
 /**
  * @package   block_ezee_constellate
- * @copyright 2020, John Stainsby <john@ezeedigital.co.uk>
+ * @copyright 2021, John Stainsby <john@ezeedigital.co.uk>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
