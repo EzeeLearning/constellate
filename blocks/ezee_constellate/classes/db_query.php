@@ -1,21 +1,39 @@
 <?php
-
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+ 
 /**
- * Ezee Constellate dashboard
+ * Database queries for plugin
  *
- * @package   block_ezee_constellate
- * @copyright 2021, John Stainsby <john@ezeedigital.co.uk>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_ezee_constellate
+ * @copyright  2021 John Stainsby
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 class db_query {
 
-    //Assigned staff and course totals for dashboard
+    /**
+     * Get total number of courses, assigned courses and assigned learning plans for dashboard statistics
+     *
+     * @param bool      $allStaff Admin setting to switch between all staff and staff relating to a single user
+     * @return array    List of courses and enrolments    
+     */
     public function dashboardTotals($allStaff) {
         global $DB, $USER;
         $params;
 
-        //Set parameter for current userid
         if ($allStaff) {
             $params = [
                 'userid1' => -1,
@@ -67,7 +85,13 @@ class db_query {
     }
 
 
-    //Staff list for table
+    /**
+     * Staff list including information and course or learning plan enrolments
+     *
+     * @param bool      $learningPlan Whether to show learning plan information or course enrolments
+     * @param bool      $allStaff Admin setting to switch between all staff and staff relating to a single user
+     * @return array    List of user with learning plan or course enrolment information
+     */
     public function staffList($learningPlan, $allStaff) {
         global $DB, $USER;
         $sql;
@@ -152,7 +176,12 @@ class db_query {
     }
 
 
-    //Course list for chart
+    /**
+     * Get list of courses for course enrolments graph
+     *
+     * @param bool      $allStaff Admin setting to switch between all staff and staff relating to a single user
+     * @return array    List of courses with enrolment numbers   
+     */
     public function courseList($allStaff) {
         global $DB, $USER;
         $params;
@@ -192,7 +221,11 @@ class db_query {
     }
 
 
-    //Activity dates for chart
+    /**
+     * Get monthly login and course activity stats for users
+     *
+     * @return array List of last 12 months with login and access totals    
+     */
     function activityDates() {
         global $DB;
         
@@ -222,6 +255,12 @@ class db_query {
     }
     
 
+    /**
+     * Initialise plugin and check subscription
+     *
+     * @param string    $orderid Admin setting for subscription orderid
+     * @return bool     Whether or not the plugin has an active subscription
+     */
     function config($orderid) {
         global $DB;
 

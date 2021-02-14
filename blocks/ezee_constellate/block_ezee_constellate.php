@@ -1,11 +1,25 @@
 <?php
-
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+ 
 /**
- * Ezee Constellate dashboard
+ * This is a one-line short description of the file.
  *
- * @package   block_ezee_constellate
- * @copyright 2021, John Stainsby <john@ezeedigital.co.uk>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_ezee_constellate
+ * @copyright  2021 John Stainsby
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 include $CFG->dirroot . '/blocks/ezee_constellate/classes/db_query.php';
@@ -27,14 +41,14 @@ class block_ezee_constellate extends block_base {
 
         global $CFG, $USER, $PAGE, $OUTPUT;    
         
-        //Get information from database
+        // Get information from database
         $db_query = new db_query;
         $orderid = get_config('block_ezee_constellate', 'orderid');
         $init_config = $db_query->config($orderid);
         $output;
         
         if ($init_config === true) {
-            //Add jquery and js files
+            // Add jquery and js files
             $PAGE->requires->jquery();
             $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/Chart.bundle.min.js'), true);
             $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/ezee_constellate.js'));
@@ -53,12 +67,12 @@ class block_ezee_constellate extends block_base {
             $resultsactivity = $db_query->activityDates();
             $activityJSON = json_encode(array_values($resultsactivity));
     
-            //Pass variables to js file
+            // Pass variables to js file
             $PAGE->requires->js_init_call('loadPercentageGraph', $resultssummary);
             $PAGE->requires->js_init_call('loadCourseGraph', array($coursesJSON));
             $PAGE->requires->js_init_call('loadDateGraph', array($activityJSON));
     
-            //Notifications
+            // Notifications
             $percentage = $resultvalues->completionpercentage > 100 ? 100 : $resultvalues->completionpercentage;
             $type;
             $message;
@@ -80,12 +94,12 @@ class block_ezee_constellate extends block_base {
             }
             \core\notification::add($message, $type);
     
-            //Check site admin settings
+            // Check site admin settings
             $showactivity = get_config('block_ezee_constellate', 'showactivity');
             $graphDisplay = $showactivity ? "visible" : "hidden";
             $tableDisplay = $showactivity ? "hidden" : "visible";
     
-            //Render content
+            // Render content
             $templatecontext = (object)[
                 'manager' => $USER->firstname . ' ' . $USER->lastname,
                 'staffcount' => count($resultsstaff),
