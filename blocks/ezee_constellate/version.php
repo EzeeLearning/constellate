@@ -22,13 +22,13 @@
  
 defined('MOODLE_INTERNAL') || die();
  
-$plugin->version = 2020100100;              // Version of the plugin in YYYYMMDDXX where XX is incrementing number
-$plugin->requires = 2020061502;             // Specifies the minimum version number of Moodle core that this plugin requires
-$plugin->component = 'block_ezee_constellate';   // Type and name of plugin e.g. quiz module = mod_quiz
-$plugin->maturity = MATURITY_ALPHA;         // Stablity of plugin (MATURITY_ALPHA, MATURITY_BETA, MATURITY_RC or MATURITY_STABLE)
-$plugin->release = 'Testing_0_0';           // Release version name
+$plugin->version = 2021021401;                      // Version of the plugin in YYYYMMDDXX where XX is incrementing number
+$plugin->requires = 2020061502;                     // Specifies the minimum version number of Moodle core that this plugin requires
+$plugin->component = 'block_ezee_constellate';      // Type and name of plugin e.g. quiz module = mod_quiz
+$plugin->maturity = MATURITY_BETA;                 // Stablity of plugin (MATURITY_ALPHA, MATURITY_BETA, MATURITY_RC or MATURITY_STABLE)
+$plugin->release = 'Testing_0_1';                   // Release version name
 
-//$plugin->supported = TODO;                / Available as of Moodle 3.9.0 or later.
+//$plugin->supported = TODO;                // Available as of Moodle 3.9.0 or later.
 //$plugin->incompatible = TODO;             // Available as of Moodle 3.9.0 or later.
 
 // $plugin->dependencies = [                // Declare explicit dependency on other plugin(s) for this plugin to work

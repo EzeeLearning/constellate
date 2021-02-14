@@ -221,4 +221,51 @@ class db_query {
         return $results;
     }
     
+
+    function config($orderid) {
+        global $DB;
+
+        $sql = "SELECT (CASE WHEN CURDATE() < DATE_ADD(timeinitial, INTERVAL duration DAY) THEN 1 ELSE 0 END) AS tt FROM mdl_blocks_ezee_constellate";
+        $init = $DB->get_records_sql($sql, []);
+
+        if ($init) {
+            $tr = array_values($init)[0]->tt;
+            if ($tr == 1) {
+                return true;
+            }
+            else {
+                if ($orderid) {
+                    $url = "https://auth.ezeeconstellate.co.uk";
+                    $data = array('orderid' => $orderid);   
+                    $options = array(
+                        'http' => array(
+                            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                            'method'  => 'POST',
+                            'content' => http_build_query($data)
+                        )
+                    );
+                    $context  = stream_context_create($options);
+                    $result = file_get_contents($url, false, $context);
+                    if ($result === FALSE) { 
+                        return false;
+                    }
+                    else {
+                        $obj = json_decode($result);
+                        if ($obj->orderstatus == "FULFILLED")
+                            return true;
+                        else
+                            return false;
+                    }
+                }
+                else {
+                    return false;
+                }
+                
+            }
+        }
+        else {
+            $DB->execute("INSERT INTO mdl_blocks_ezee_constellate VALUES (CURDATE(), 14)", []);         
+            return true;;
+        }
+    }
 }

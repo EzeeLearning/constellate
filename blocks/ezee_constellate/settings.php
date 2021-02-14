@@ -19,4 +19,9 @@ if ($ADMIN->fulltree) {
         get_string('staffmode', 'block_ezee_constellate'),
         get_string('staffmodedesc', 'block_ezee_constellate'),
         0));
+
+    //OrderId for subscription to plugin
+    $settings->add(new admin_setting_configtext('block_ezee_constellate/orderid',
+        get_string('orderid', 'block_ezee_constellate'),
+        get_string('orderiddesc', 'block_ezee_constellate'), ''));
 }

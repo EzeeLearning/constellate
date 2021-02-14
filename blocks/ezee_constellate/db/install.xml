@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/ezee_constellate/db" VERSION="2020100100" COMMENT="XMLDB file for Ezee Constellate"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+  <TABLES>
+    <TABLE NAME="blocks_ezee_constellate" COMMENT="Config">
+      <FIELDS>
+        <FIELD NAME="timeinitial" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="duration" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="14" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="timeinitial"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

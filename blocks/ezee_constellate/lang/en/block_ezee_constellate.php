@@ -19,8 +19,11 @@ $string['showactivitydesc'] = 'Choose whether to show staff list table or staff 
 $string['learningplan'] = 'Align To Learning Plans';
 $string['learningplandesc'] = 'Display staff completion and statistics based on learning plans rather than assigned courses.';
 
-$string['staffmode'] = 'FOR TESTING: Show All Staff';
-$string['staffmodedesc'] = 'Show all staff on the dashboard rather than just the current manager\'s staff.';
+$string['staffmode'] = 'Show All Staff';
+$string['staffmodedesc'] = 'Show all staff on the dashboard rather than just an individual manager\'s staff.';
+
+$string['orderid'] = 'Order Number';
+$string['orderiddesc'] = 'Enter your order number here to enable full access to the plugin beyond the 14 day free trial. Your order number will be provided after subscribing at www.ezeeconstellate.co.uk';
 
 $string['staff_zero'] = 'None of your staff have completed courses, check your Constellate dashboard to improve your team\'s compliance.';
 $string['staff_low'] = 'Your team course completion is low, check your Constellate dashboard to improve your team\'s compliance.';

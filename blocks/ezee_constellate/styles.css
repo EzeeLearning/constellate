@@ -31,13 +31,6 @@
      width: 100%;
  }
 
- /* .constellate-logo {
-    width: 130px;
-    position: absolute;
-    top: 40px;
-    right: 20px;
-} */
-
  .constellate-manager-name {
      position: absolute;
      top: 17px;
@@ -277,4 +270,13 @@
 
  .constellate-progress-bar.orange {
     background-color: #f7ad43;
+}
+
+.constellate-logo {
+    width: 40%;
+}
+
+.constellate-disabled {
+    opacity: 0.6;
+    pointer-events: none;
 }
