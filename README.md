@@ -1,7 +1,6 @@
-<!-- PROJECT LOGO -->
-  <a href="https://ezeeconstellate.co.uk" target="_blank">
-    <img src="blocks/ezee_constellate/constellate.png" alt="Logo" width="200px">
-  </a>
+<a href="https://ezeeconstellate.co.uk" target="_blank">
+  <img src="blocks/ezee_constellate/constellate.png" alt="Logo" width="200px">
+</a>
 
 # Ezee Constellate
 
