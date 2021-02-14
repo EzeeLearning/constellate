@@ -17,7 +17,7 @@ This plugin requires a subscription from <a href="https://ezeeconstellate.co.uk"
 
 ### Installing
 
-1. Download plugin from <a href="https://github.com/EzeeLearning/constellate">GitHub</a>, Moodle plugins or <a href="https://ezeeconstellate.co.uk" target="_blank">Ezee Constellate</a>
+1. Download plugin from <a href="https://github.com/EzeeLearning/constellate" target="_blank">GitHub</a>, <a href="https://moodle.org/plugins/block_ezee_constellate" target="_blank">Moodle plugins</a> or <a href="https://ezeeconstellate.co.uk" target="_blank">Ezee Constellate</a>
 2. Upload zip file directly to Moodle as an administrator via Site administration > Plugins > Install plugins
 3. Click the button 'Install plugins from Moodle plugins directory'.
 4. Select your current Moodle version, then search for a plugin with an Install button, click the Install button, then click Continue.
