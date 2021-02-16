@@ -12,12 +12,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Information
 
-This plugin requires a subscription from <a href="https://ezeeconstellate.co.uk" target="_blank">ezeeconstellate.co.uk</a>. Once installed the full version of the plugin will operate under a 14 day free trial, after which an active subscription will be required.
+This plugin requires a subscription from <a href="https://ezeeconstellate.com" target="_blank">ezeeconstellate.com</a>. Once installed the full version of the plugin will operate under a 14 day free trial, after which an active subscription will be required.
 
 
 ### Installing
 
-1. Download plugin from <a href="https://github.com/EzeeLearning/constellate" target="_blank">GitHub</a>, <a href="https://moodle.org/plugins/block_ezee_constellate" target="_blank">Moodle plugins</a> or <a href="https://ezeeconstellate.co.uk" target="_blank">Ezee Constellate</a>
+1. Download plugin from <a href="https://github.com/EzeeLearning/constellate" target="_blank">GitHub</a>, <a href="https://moodle.org/plugins/block_ezee_constellate" target="_blank">Moodle plugins</a> or <a href="https://ezeeconstellate.com" target="_blank">Ezee Constellate</a>
 2. Upload zip file directly to Moodle as an administrator via Site administration > Plugins > Install plugins
 3. Click the button 'Install plugins from zip file'.
 4. Select the plugin zip file from your computer, click the Install button, then click Continue.
