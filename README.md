@@ -26,6 +26,19 @@ This plugin requires a subscription from <a href="https://ezeeconstellate.co.uk"
 
 Full Moodle plugin installation instructions available <a href="https://docs.moodle.org/310/en/Installing_plugins">here</a>.
 
+### Setup
+
+After installation the plugin doesn't require any configuration. It just needs to be added to your Moodle dashboard as a block.
+
+1. Enable customisation on the dashboard homepage by clicking 'Customise this page'.
+2. Select 'Add a block' from the left menu
+3. Select Ezee Constellate Dashboard
+4. Reposition the block to the desired location
+
+#### Optional 
+By using the Moodle Default Dashboard page and integrated roles you can set the Constellate Dashboard to automatically appear for all users or specific users e.g. managers or teachers.
+
+
 ### Settings
 
 Settings can be found at Site administration > Plugins > Block > Ezee Constellate
