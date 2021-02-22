@@ -44,3 +44,7 @@ By using the Moodle Default Dashboard page and integrated roles you can set the 
 Settings can be found at Site administration > Plugins > Block > Ezee Constellate
 
 Once you have purchased a subscription to Ezee Constellate you can input your order number in the plugin settings.
+
+
+### Privacy
+The Ezee Constellate dashboard only displays existing data from within Moodle and does not transfer any user data to external systems.
