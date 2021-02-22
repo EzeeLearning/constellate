@@ -109,7 +109,6 @@ function loadDateGraph(Y, d) {
     var lineData1 = [];
     var lineData2 = [];
 
-    //Get month dates for line graph
     var d = new Date(),
         n = d.getMonth();
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
- 
+
 /**
  * Database queries for plugin
  *
@@ -27,14 +27,14 @@ class db_query {
     /**
      * Get total number of courses, assigned courses and assigned learning plans for dashboard statistics
      *
-     * @param bool      $allStaff Admin setting to switch between all staff and staff relating to a single user
-     * @return array    List of courses and enrolments    
+     * @param bool      $allstaff Admin setting to switch between all staff and staff relating to a single user
+     * @return array    List of courses and enrolments
      */
-    public function dashboardTotals($allStaff) {
+    public function dashboardtotals($allstaff) {
         global $DB, $USER;
         $params;
 
-        if ($allStaff) {
+        if ($allstaff) {
             $params = [
                 'userid1' => -1,
                 'userid2' => -1,
@@ -51,7 +51,7 @@ class db_query {
             ];
         }
 
-        $sql = 
+        $sql =
         "SELECT TotalCourses, AssignedCourses, CompletedCourses, ROUND((CompletedCourses / AssignedCourses) * 100) AS CompletionPercentage, LearningPlans
         FROM (
             SELECT COUNT(DISTINCT CourseId) AS TotalCourses, COUNT(CourseId) AS AssignedCourses,
@@ -61,26 +61,26 @@ class db_query {
                 SELECT a.UserId, a.CourseId, cc.timecompleted, cp.id AS PlanId
                 FROM (
                     SELECT u.id AS UserId, c.Id AS CourseId
-                    FROM mdl_user u
-                    JOIN mdl_role_assignments ra ON ra.userid = u.id
-                    JOIN mdl_context ctx ON ctx.id = ra.contextid
-                    JOIN mdl_course c ON c.id = ctx.instanceid AND ctx.contextlevel = 50   
-                    WHERE :userid1 = -1 OR ra.contextid IN (SELECT contextid FROM mdl_role_assignments WHERE userid = :userid2) 
+                    FROM {user} u
+                    JOIN {role_assignments} ra ON ra.userid = u.id
+                    JOIN {context} ctx ON ctx.id = ra.contextid
+                    JOIN {course} c ON c.id = ctx.instanceid AND ctx.contextlevel = 50   
+                    WHERE :userid1 = -1 OR ra.contextid IN (SELECT contextid FROM {role_assignments} WHERE userid = :userid2) 
                     UNION  
                     SELECT u.id AS UserId, c.Id AS CourseId
-                    FROM mdl_user u
-                    JOIN mdl_role_assignments ra ON ra.userid = u.id
-                    JOIN mdl_context ctx ON ctx.id = ra.contextid
-                    JOIN mdl_course_categories cat ON cat.id = ctx.instanceid AND ctx.contextlevel = 40
-                    JOIN mdl_course c ON c.category = cat.id
-                    WHERE :userid3 = -1 OR ra.contextid IN (SELECT contextid FROM mdl_role_assignments WHERE userid = :userid4) 
+                    FROM {user} u
+                    JOIN {role_assignments} ra ON ra.userid = u.id
+                    JOIN {context} ctx ON ctx.id = ra.contextid
+                    JOIN {course_categories} cat ON cat.id = ctx.instanceid AND ctx.contextlevel = 40
+                    JOIN {course} c ON c.category = cat.id
+                    WHERE :userid3 = -1 OR ra.contextid IN (SELECT contextid FROM {role_assignments} WHERE userid = :userid4) 
                 ) a
-                LEFT OUTER JOIN mdl_course_completions cc ON cc.course = a.CourseId AND cc.userid = a.UserId
-                LEFT OUTER JOIN mdl_competency_plan cp ON cp.userid = a.UserId
+                LEFT OUTER JOIN {course_completions} cc ON cc.course = a.CourseId AND cc.userid = a.UserId
+                LEFT OUTER JOIN {competency_plan} cp ON cp.userid = a.UserId
                 GROUP BY a.UserId, a.CourseId
             ) g
         ) s";
-        
+
         return $DB->get_records_sql($sql, $params);
     }
 
@@ -88,16 +88,16 @@ class db_query {
     /**
      * Staff list including information and course or learning plan enrolments
      *
-     * @param bool      $learningPlan Whether to show learning plan information or course enrolments
-     * @param bool      $allStaff Admin setting to switch between all staff and staff relating to a single user
+     * @param bool      $learningplan Whether to show learning plan information or course enrolments
+     * @param bool      $allstaff Admin setting to switch between all staff and staff relating to a single user
      * @return array    List of user with learning plan or course enrolment information
      */
-    public function staffList($learningPlan, $allStaff) {
+    public function stafflist($learningplan, $allstaff) {
         global $DB, $USER;
         $sql;
         $params;
 
-        if ($allStaff) {
+        if ($allstaff) {
             $params = [
                 'userid1' => -1,
                 'userid2' => -1
@@ -110,8 +110,8 @@ class db_query {
             ];
         }
 
-        if ($learningPlan) {
-            $sql = 
+        if ($learningplan) {
+            $sql =
             "SELECT Id, FirstName, LastName, DisplayName, Email, IFNULL(LearningPlan, 'No Learning Plan') AS LearningPlan, PlanCompetencies, CompletedCompetencies, 
             (CASE WHEN PlanCompetencies = 0 THEN 0 ELSE ROUND((CompletedCompetencies / PlanCompetencies) * 100) END) AS CompletionPercentage, LinkedCourses, CompletedCourses,
             (CASE WHEN PlanCompetencies = 0 OR ROUND((CompletedCompetencies / PlanCompetencies) * 100) BETWEEN 0 AND 50 THEN 'red' ElSE (CASE WHEN ROUND((CompletedCompetencies / PlanCompetencies) * 100) BETWEEN 50 AND 80 THEN 'orange' ElSE 'green' END) END) AS ProgressClass, Logins, CourseViews, ModuleViews
@@ -122,25 +122,25 @@ class db_query {
                 SUM(CASE WHEN l.action = 'loggedin' AND l.target = 'user' THEN 1 ELSE 0 END) AS Logins,
                 SUM(CASE WHEN l.action = 'viewed' AND l.target = 'course' THEN 1 ELSE 0 END) AS CourseViews,
                 SUM(CASE WHEN l.action = 'viewed' AND l.target = 'course_module' THEN 1 ELSE 0 END) AS ModuleViews
-                FROM mdl_user u
-                LEFT OUTER JOIN mdl_competency_plan p ON p.userid = u.id
-                LEFT OUTER JOIN mdl_competency_plancomp pc ON pc.planid = p.id
+                FROM {user} u
+                LEFT OUTER JOIN {competency_plan} p ON p.userid = u.id
+                LEFT OUTER JOIN {competency_plancomp} pc ON pc.planid = p.id
                 LEFT OUTER JOIN (
                     SELECT up.userid, up.planid, COUNT(uc.id) AS Completed
-                    FROM mdl_competency_usercomp uc
-                    JOIN mdl_competency_usercompplan up ON up.userid = uc.userid AND up.competencyid = uc.competencyid
+                    FROM {competency_usercomp} uc
+                    JOIN {competency_usercompplan} up ON up.userid = uc.userid AND up.competencyid = uc.competencyid
                     WHERE uc.proficiency = 1
                     GROUP BY up.userid, up.planid
                 ) ur ON ur.userid = u.id AND ur.planid = p.id
-                LEFT OUTER JOIN mdl_competency_coursecomp cc ON cc.competencyid = pc.competencyid
-                LEFT OUTER JOIN mdl_competency_usercompcourse ucc ON ucc.userid = u.id AND ucc.competencyid = pc.competencyid AND ucc.courseid = cc.courseid
-                LEFT OUTER JOIN mdl_logstore_standard_log l ON l.userid = u.id
+                LEFT OUTER JOIN {competency_coursecomp} cc ON cc.competencyid = pc.competencyid
+                LEFT OUTER JOIN {competency_usercompcourse} ucc ON ucc.userid = u.id AND ucc.competencyid = pc.competencyid AND ucc.courseid = cc.courseid
+                LEFT OUTER JOIN {logstore_standard_log} l ON l.userid = u.id
                 GROUP BY u.id, p.id
             ) c
             ORDER BY CompletionPercentage DESC, CourseViews DESC, ModuleViews DESC, Logins DESC, LastName";
         }
         else {
-            $sql = 
+            $sql =
             "SELECT s.Id, FirstName, LastName, DisplayName, Email, AssignedCourses, CompletedCourses,
             ROUND((CompletedCourses / AssignedCourses) * 100) AS CompletionPercentage,
             (CASE WHEN ROUND((CompletedCourses / AssignedCourses) * 100) BETWEEN 0 AND 50 THEN 'red' ElSE (CASE WHEN ROUND((CompletedCourses / AssignedCourses) * 100) BETWEEN 50 AND 80 THEN 'orange' ElSE 'green' END) END) AS ProgressClass,
@@ -153,21 +153,21 @@ class db_query {
                 SUM(CASE WHEN cc.timecompleted IS NOT NULL THEN 1 ELSE 0 END) AS CompletedCourses
                 FROM (
                     SELECT c.Id AS CourseId, ctx.Id AS ContextId
-                    FROM mdl_context ctx
-                    JOIN mdl_course c ON c.id = ctx.instanceid AND ctx.contextlevel = 50   
+                    FROM {context} ctx
+                    JOIN {course} c ON c.id = ctx.instanceid AND ctx.contextlevel = 50   
                     UNION  
                     SELECT c.Id AS CourseId, ctx.Id AS ContextId
-                    FROM mdl_context ctx
-                    JOIN mdl_course_categories cat ON cat.id = ctx.instanceid AND ctx.contextlevel = 40
-                    JOIN mdl_course c ON c.category = cat.id
+                    FROM {context} ctx
+                    JOIN {course_categories} cat ON cat.id = ctx.instanceid AND ctx.contextlevel = 40
+                    JOIN {course} c ON c.category = cat.id
                 ) a
-                JOIN mdl_role_assignments ra ON ra.contextid = a.ContextId
-                JOIN mdl_user u ON u.id = ra.userid
-                LEFT OUTER JOIN mdl_course_completions cc ON cc.course = a.CourseId AND cc.userid = u.id
-                WHERE :userid1 = -1 OR ra.contextid IN (SELECT contextid FROM mdl_role_assignments WHERE userid = :userid2) 
+                JOIN {role_assignments} ra ON ra.contextid = a.ContextId
+                JOIN {user} u ON u.id = ra.userid
+                LEFT OUTER JOIN {course_completions} cc ON cc.course = a.CourseId AND cc.userid = u.id
+                WHERE :userid1 = -1 OR ra.contextid IN (SELECT contextid FROM {role_assignments} WHERE userid = :userid2) 
                 GROUP BY u.id
             ) s
-            LEFT OUTER JOIN mdl_logstore_standard_log l ON l.userid = s.id
+            LEFT OUTER JOIN {logstore_standard_log} l ON l.userid = s.id
             GROUP BY s.Id
             ORDER BY CompletionPercentage DESC, CourseViews DESC, ModuleViews DESC, Logins DESC, LastName";
         }
@@ -179,14 +179,14 @@ class db_query {
     /**
      * Get list of courses for course enrolments graph
      *
-     * @param bool      $allStaff Admin setting to switch between all staff and staff relating to a single user
+     * @param bool      $allstaff Admin setting to switch between all staff and staff relating to a single user
      * @return array    List of courses with enrolment numbers   
      */
-    public function courseList($allStaff) {
+    public function courselist($allstaff) {
         global $DB, $USER;
         $params;
 
-        if ($allStaff) {
+        if ($allstaff) {
             $params = [
                 'userid1' => -1,
                 'userid2' => -1
@@ -199,20 +199,20 @@ class db_query {
             ];
         }
 
-        $sql = 
+        $sql =
         "SELECT CourseName, COUNT(DISTINCT ra.userid) AS Users
         FROM (
             SELECT c.Id AS CourseId, c.shortname AS CourseName, ctx.Id AS ContextId
-            FROM mdl_context ctx
-            JOIN mdl_course c ON c.id = ctx.instanceid AND ctx.contextlevel = 50   
+            FROM {context} ctx
+            JOIN {course} c ON c.id = ctx.instanceid AND ctx.contextlevel = 50   
             UNION  
             SELECT c.Id AS CourseId, c.shortname AS CourseName, ctx.Id AS ContextId
-            FROM mdl_context ctx
-            JOIN mdl_course_categories cat ON cat.id = ctx.instanceid AND ctx.contextlevel = 40
-            JOIN mdl_course c ON c.category = cat.id           
+            FROM {context} ctx
+            JOIN {course_categories} cat ON cat.id = ctx.instanceid AND ctx.contextlevel = 40
+            JOIN {course} c ON c.category = cat.id           
         ) a
-        JOIN mdl_role_assignments ra ON ra.contextid = a.ContextId
-        WHERE :userid1 = -1 OR ra.contextid IN (SELECT contextid FROM mdl_role_assignments WHERE userid = :userid2) 
+        JOIN {role_assignments} ra ON ra.contextid = a.ContextId
+        WHERE :userid1 = -1 OR ra.contextid IN (SELECT contextid FROM {role_assignments} WHERE userid = :userid2) 
         GROUP BY CourseId
         ORDER BY Users DESC
         LIMIT 10";
@@ -226,9 +226,9 @@ class db_query {
      *
      * @return array List of last 12 months with login and access totals    
      */
-    function activityDates() {
+    public function activitydates() {
         global $DB;
-        
+
         $DB->execute("CREATE TEMPORARY TABLE temp_dates (`Month` INT, Logins INT NULL, Accesses INT NULL)", []);
         $DB->execute("INSERT INTO temp_dates VALUES (1, NULL, NULL)", []);
         $DB->execute("INSERT INTO temp_dates VALUES (2, NULL, NULL)", []);
@@ -242,10 +242,10 @@ class db_query {
         $DB->execute("INSERT INTO temp_dates VALUES (10, NULL, NULL)", []);
         $DB->execute("INSERT INTO temp_dates VALUES (11, NULL, NULL)", []);
         $DB->execute("INSERT INTO temp_dates VALUES (12, NULL, NULL)", []);
-        
-        $DB->execute("UPDATE temp_dates SET Logins = (SELECT COUNT(*) FROM mdl_user WHERE FROM_UNIXTIME(lastlogin) > DATE_SUB(NOW(), INTERVAL 1 YEAR) AND MONTH(FROM_UNIXTIME(lastlogin)) = temp_dates.`Month`)", []);
-        
-        $DB->execute("UPDATE temp_dates SET Accesses = (SELECT COUNT(*) FROM mdl_user WHERE FROM_UNIXTIME(lastaccess) > DATE_SUB(NOW(), INTERVAL 1 YEAR) AND MONTH(FROM_UNIXTIME(lastaccess)) = temp_dates.`Month`)", []);
+
+        $DB->execute("UPDATE temp_dates SET Logins = (SELECT COUNT(*) FROM {user} WHERE FROM_UNIXTIME(lastlogin) > DATE_SUB(NOW(), INTERVAL 1 YEAR) AND MONTH(FROM_UNIXTIME(lastlogin)) = temp_dates.`Month`)", []);
+
+        $DB->execute("UPDATE temp_dates SET Accesses = (SELECT COUNT(*) FROM {user} WHERE FROM_UNIXTIME(lastaccess) > DATE_SUB(NOW(), INTERVAL 1 YEAR) AND MONTH(FROM_UNIXTIME(lastaccess)) = temp_dates.`Month`)", []);
 
         $results = $DB->get_records_sql("SELECT * FROM temp_dates", []);
 
@@ -253,7 +253,7 @@ class db_query {
 
         return $results;
     }
-    
+
 
     /**
      * Initialise plugin and check subscription
@@ -261,10 +261,10 @@ class db_query {
      * @param string    $orderid Admin setting for subscription orderid
      * @return bool     Whether or not the plugin has an active subscription
      */
-    function config($orderid) {
+    public function config($orderid) {
         global $DB;
 
-        $sql = "SELECT (CASE WHEN CURDATE() < DATE_ADD(timeinitial, INTERVAL duration DAY) THEN 1 ELSE 0 END) AS tt FROM mdl_blocks_ezee_constellate";
+        $sql = "SELECT (CASE WHEN CURDATE() < DATE_ADD(timeinitial, INTERVAL duration DAY) THEN 1 ELSE 0 END) AS tt FROM {blocks_ezee_constellate}";
         $init = $DB->get_records_sql($sql, []);
 
         if ($init) {
@@ -275,7 +275,7 @@ class db_query {
             else {
                 if ($orderid) {
                     $url = "https://auth.ezeeconstellate.co.uk";
-                    $data = array('orderid' => $orderid);   
+                    $data = array('orderid' => $orderid);
                     $options = array(
                         'http' => array(
                             'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -285,25 +285,27 @@ class db_query {
                     );
                     $context  = stream_context_create($options);
                     $result = file_get_contents($url, false, $context);
-                    if ($result === FALSE) { 
+                    if ($result === false) {
                         return false;
                     }
                     else {
                         $obj = json_decode($result);
-                        if ($obj->orderstatus == "FULFILLED")
+                        $status = $obj->orderstatus;
+                        if ($status == "FULFILLED") {
                             return true;
-                        else
+                        }
+                        else {
                             return false;
+                        }
                     }
                 }
                 else {
                     return false;
                 }
-                
             }
         }
         else {
-            $DB->execute("INSERT INTO mdl_blocks_ezee_constellate VALUES (CURDATE(), 14)", []);         
+            $DB->execute("INSERT INTO {blocks_ezee_constellate} VALUES (CURDATE(), 14)", []);
             return true;;
         }
     }

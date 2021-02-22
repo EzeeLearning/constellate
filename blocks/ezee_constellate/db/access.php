@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
- 
+
 /**
  * @package    block_ezee_constellate
  * @copyright  2021 John Stainsby
@@ -27,20 +27,20 @@ $capabilities = array(
         'archetypes' => array(
             'user' => CAP_ALLOW
         ),
- 
+
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
     ),
- 
+
     'block/ezee_constellate:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
- 
+
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
         ),
- 
+
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
     ),
 );

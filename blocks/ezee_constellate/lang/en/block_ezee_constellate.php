@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
- 
+
 /**
  * Moodle language strings for plugin.
  *
@@ -22,9 +22,9 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['ezee_constellate:addinstance'] = 'Add a new Ezee Constellate Dashboard block';
-$string['ezee_constellate:myaddinstance'] = 'Add a new Ezee Constellate Dashboard block to Dashboard';
-$string['ezee_constellate'] = '(new Ezee Constellate Dashboard block)';
+$string['ezee_constellate:addinstance'] = 'Add a new Ezee Constellate dashboard block';
+$string['ezee_constellate:myaddinstance'] = 'Add a new Ezee Constellate block to the dashboard';
+$string['ezee_constellate'] = '(new Ezee Constellate dashboard block)';
 $string['pluginname'] = 'Ezee Constellate Dashboard';
 
 $string['showactivity'] = 'Toggle Activity/Staff';
@@ -39,7 +39,9 @@ $string['staffmodedesc'] = 'Show all staff on the dashboard rather than just an 
 $string['orderid'] = 'Order Number';
 $string['orderiddesc'] = 'Enter your order number here to enable full access to the plugin beyond the 14 day free trial. Your order number will be provided after subscribing at www.ezeeconstellate.co.uk';
 
-$string['staff_zero'] = 'None of your staff have completed courses, check your Constellate dashboard to improve your team\'s compliance.';
-$string['staff_low'] = 'Your team course completion is low, check your Constellate dashboard to improve your team\'s compliance.';
-$string['staff_medium'] = 'Your team\'s compliance is improving, check your Constellate dashboard to keep it going.';
-$string['staff_high'] = 'Check your Constellate dashboard to improve your team\'s compliance.';
+$string['staff_zero'] = 'Staff completion percentage is {$a}%. None of your staff have completed courses, check your Constellate dashboard to improve your team\'s compliance.';
+$string['staff_low'] = 'Staff completion percentage is {$a}%. Your team\'s course completion is low, check your Constellate dashboard to improve your team\'s compliance.';
+$string['staff_medium'] = 'Staff completion percentage is {$a}%. Your team\'s compliance is improving, check your Constellate dashboard to keep it going.';
+$string['staff_high'] = 'Staff completion percentage is {$a}%. Your team\'s compliance is good, keep checking your Constellate dashboard to maintain it.';
+
+$string['privacy:metadata'] = 'The Ezee Constellate dashboard only displays existing data from within Moodle and does not transfer any user data to external systems.';

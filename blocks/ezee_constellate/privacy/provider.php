@@ -15,15 +15,25 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
+ * Privay API class
+ *
  * @package    block_ezee_constellate
  * @copyright  2021 John Stainsby
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2021022101;                      // Version of the plugin in YYYYMMDDXX where XX is incrementing number.
-$plugin->requires = 2018120300;                     // Specifies the minimum version number of Moodle core that this plugin requires.
-$plugin->component = 'block_ezee_constellate';      // Type and name of plugin e.g. quiz module = mod_quiz.
-$plugin->maturity = MATURITY_STABLE;                // Stablity of plugin (MATURITY_ALPHA, MATURITY_BETA, MATURITY_RC or MATURITY_STABLE).
-$plugin->release = 'Version_1_0';                   // Release version name.
+class provider implements
+    // This plugin does not store any personal user data.
+    \core_privacy\local\metadata\null_provider {
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}
