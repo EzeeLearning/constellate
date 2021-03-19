@@ -129,20 +129,19 @@ function loadDateGraph(Y, d) {
     }
 
     var datasets = [{
-            label: 'User Logins',
-            data: lineData1.reverse(),
-            backgroundColor: '#57c5d7',
-            borderColor: '#57c5d7',
-            fill: false
-        },
-        {
-            label: 'Course Access',
-            data: lineData2.reverse(),
-            backgroundColor: '#3d6b9f',
-            borderColor: '#3d6b9f',
-            fill: false
-        }
-    ]
+        label: 'User Logins',
+        data: lineData1.reverse(),
+        backgroundColor: '#57c5d7',
+        borderColor: '#57c5d7',
+        fill: false
+    },
+    {
+        label: 'Course Access',
+        data: lineData2.reverse(),
+        backgroundColor: '#3d6b9f',
+        borderColor: '#3d6b9f',
+        fill: false
+    }]
 
     setTimeout(function () {
         new Chart(document.getElementById('DateChart').getContext('2d'), {

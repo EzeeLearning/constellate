@@ -42,8 +42,8 @@ if ($ADMIN->fulltree) {
         get_string('staffmodedesc', 'block_ezee_constellate'),
         1));
 
-    // OrderId for subscription to plugin.
-    $settings->add(new admin_setting_configtext('block_ezee_constellate/orderid',
-        get_string('orderid', 'block_ezee_constellate'),
-        get_string('orderiddesc', 'block_ezee_constellate'), ''));
+    // Email address for subscription to plugin.
+    $settings->add(new admin_setting_configtext('block_ezee_constellate/email',
+        get_string('email', 'block_ezee_constellate'),
+        get_string('emaildesc', 'block_ezee_constellate'), ''));
 }

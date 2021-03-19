@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>js/Chart.bundle.min.js</location>
+        <name>Chart.js</name>
+        <version>2.9.4</version>
+        <license>The MIT License</license>
+        <licenseversion>1.0</licenseversion>
+    </library>
+</libraries>

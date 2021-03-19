@@ -14,63 +14,74 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * This is a one-line short description of the file.
- *
- * @package    block_ezee_constellate
- * @copyright  2021 John Stainsby
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 require $CFG->dirroot . '/blocks/ezee_constellate/classes/db_query.php';
 
-class block_ezee_constellate extends block_base {
-
-    function init() {
+/**
+ * Block plugin to show dashboad with course information on staff.
+ *
+ * @package   block_ezee_constellate
+ * @copyright 2021 John Stainsby
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class block_ezee_constellate extends block_base
+{
+    /**
+     * Block init function
+     */
+    public function init() {
         $this->title = get_string('pluginname', 'block_ezee_constellate');
     }
 
-    function has_config() {
+    /**
+     * This line tells Moodle that the block has a settings.php file
+     *
+     * @return bool     True
+     */
+    public function has_config() {
         return true;
     }
-
-    function get_content() {
+    
+    /**
+     * Get block content
+     */
+    public function get_content() {
         if ($this->content != null) {
             return $this->content;
         }
 
-        global $CFG, $USER, $PAGE, $OUTPUT;
-        
+        global $CFG, $USER, $OUTPUT;
+
         // Get information from database.
+        $page = $this->page;
         $dbquery = new db_query;
-        $orderid = get_config('block_ezee_constellate', 'orderid');
-        $config = $dbquery->config($orderid);
+        $email = get_config('block_ezee_constellate', 'email');
+        $config = $dbquery->config($email);
         $output;
 
         if ($config === true) {
             // Add jquery and js files.
-            $PAGE->requires->jquery();
-            $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/Chart.bundle.min.js'), true);
-            $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/ezee_constellate.js'));
+            $page->requires->jquery();
+            $page->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/Chart.bundle.min.js'), true);
+            $page->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/ezee_constellate.js'));
 
             $planmode = get_config('block_ezee_constellate', 'learningplan');
             $staffmode = get_config('block_ezee_constellate', 'staffmode');
 
             $resultssummary = $dbquery->dashboardtotals($staffmode);
             $resultvalues = array_values($resultssummary)[0];
-    
+
             $resultsstaff = $dbquery->stafflist($planmode, $staffmode);
 
             $resultscourses = $dbquery->courselist($staffmode);
             $coursesjson = json_encode(array_values($resultscourses));
 
-            $resultsactivity = $dbquery->activitydates();
+            $resultsactivity = $dbquery->activitydates($staffmode);
             $activityjson = json_encode(array_values($resultsactivity));
 
             // Pass variables to js file.
-            $PAGE->requires->js_init_call('loadPercentageGraph', $resultssummary);
-            $PAGE->requires->js_init_call('loadCourseGraph', array($coursesjson));
-            $PAGE->requires->js_init_call('loadDateGraph', array($activityjson));
+            $page->requires->js_init_call('loadPercentageGraph', $resultssummary);
+            $page->requires->js_init_call('loadCourseGraph', array($coursesjson));
+            $page->requires->js_init_call('loadDateGraph', array($activityjson));
 
             // Show notifications panel above dashboard with overall percentage.
             $percentage = $resultvalues->completionpercentage > 100 ? 100 : $resultvalues->completionpercentage;
@@ -79,16 +90,13 @@ class block_ezee_constellate extends block_base {
             if ($percentage == 0) {
                 $type = \core\output\notification::NOTIFY_ERROR;
                 $message = get_string('staff_zero', 'block_ezee_constellate', $percentage);
-            }
-            else if ($percentage > 0 && $percentage < 50) {
+            } else if ($percentage > 0 && $percentage < 50) {
                 $type = \core\output\notification::NOTIFY_WARNING;
                 $message = get_string('staff_low', 'block_ezee_constellate', $percentage);
-            }
-            else if ($percentage >= 50 && $percentage < 80) {
+            } else if ($percentage >= 50 && $percentage < 80) {
                 $type = \core\output\notification::NOTIFY_INFO;
                 $message = get_string('staff_medium', 'block_ezee_constellate', $percentage);
-            }
-            else {
+            } else {
                 $type = \core\output\notification::NOTIFY_SUCCESS;
                 $message = get_string('staff_high', 'block_ezee_constellate', $percentage);
             }
@@ -117,14 +125,12 @@ class block_ezee_constellate extends block_base {
             $planmode = get_config('block_ezee_constellate', 'learningplan');
             if ($planmode) {
                 $output .= $OUTPUT->render_from_template('block_ezee_constellate/stafflearningplan', $templatecontext);
-            }
-            else {
+            } else {
                 $output .= $OUTPUT->render_from_template('block_ezee_constellate/staffenrolled', $templatecontext);
             }
 
             $output .= $OUTPUT->render_from_template('block_ezee_constellate/footer', $templatecontext);
-        }
-        else {
+        } else {
             $templatecontext = (object)[
                 'manager' => $USER->firstname . ' ' . $USER->lastname,
                 'logourl' => new moodle_url('/blocks/ezee_constellate/constellate.png'),

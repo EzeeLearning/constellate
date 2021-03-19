@@ -36,8 +36,8 @@ $string['learningplandesc'] = 'Display staff completion and statistics based on 
 $string['staffmode'] = 'Show All Staff';
 $string['staffmodedesc'] = 'Show all staff on the dashboard rather than just an individual manager\'s staff.';
 
-$string['orderid'] = 'Order Number';
-$string['orderiddesc'] = 'Enter your order number here to enable full access to the plugin beyond the 14 day free trial. Your order number will be provided after subscribing at www.ezeeconstellate.co.uk';
+$string['email'] = 'Order Email';
+$string['emaildesc'] = 'Enter the email address used for your Ezee Constellate subscription to enable full access to the plugin beyond the 14 day free trial. This is the email you used when subscribing at www.ezeeconstellate.com';
 
 $string['staff_zero'] = 'Staff completion percentage is {$a}%. None of your staff have completed courses, check your Constellate dashboard to improve your team\'s compliance.';
 $string['staff_low'] = 'Staff completion percentage is {$a}%. Your team\'s course completion is low, check your Constellate dashboard to improve your team\'s compliance.';

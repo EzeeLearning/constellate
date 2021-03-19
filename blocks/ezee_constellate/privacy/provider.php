@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Privay API class
@@ -21,8 +21,6 @@
  * @copyright  2021 John Stainsby
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 class provider implements
     // This plugin does not store any personal user data.
     \core_privacy\local\metadata\null_provider {

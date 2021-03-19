@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
+ * Plugin permissions
+ * 
  * @package    block_ezee_constellate
  * @copyright  2021 John Stainsby
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 $capabilities = array(
     'block/ezee_constellate:myaddinstance' => array(
         'captype' => 'write',
