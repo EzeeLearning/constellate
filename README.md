@@ -43,7 +43,7 @@ By using the Moodle Default Dashboard page and integrated roles you can set the 
 
 Settings can be found at Site administration > Plugins > Block > Ezee Constellate
 
-Once you have purchased a subscription to Ezee Constellate you can input your order number in the plugin settings.
+Once you have purchased a subscription to Ezee Constellate you can input your email address in the plugin settings to activate.
 
 
 ### Privacy
