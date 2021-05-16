@@ -165,7 +165,7 @@ function loadDateGraph(Y, d) {
                     }],
                     xAxes: [{
                         type: 'category',
-                        labels: months.reverse(),
+                        labels: lineMonths.reverse(),
                         gridLines: {
                             display: false
                         },

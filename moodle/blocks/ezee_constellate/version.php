@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2021022101;                      // Version of the plugin in YYYYMMDDXX where XX is incrementing number.
+$plugin->version = 2021051601;                      // Version of the plugin in YYYYMMDDXX where XX is incrementing number.
 $plugin->requires = 2018120300;                     // Specifies the minimum version number of Moodle core that this plugin requires.
 $plugin->component = 'block_ezee_constellate';      // Type and name of plugin e.g. quiz module = mod_quiz.
 $plugin->maturity = MATURITY_STABLE;                // Stablity of plugin (MATURITY_ALPHA, MATURITY_BETA, MATURITY_RC or MATURITY_STABLE).
-$plugin->release = 'Version_1_0';                   // Release version name.
+$plugin->release = 'Version_1_1';                   // Release version name.
