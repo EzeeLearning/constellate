@@ -4,6 +4,7 @@
 # But not these files...
 !README.md
 !.gitignore
-!*blocks
-!*blocks/ezee_constellate
-!*blocks/ezee_constellate/**
+!*moodle
+!*moodle/blocks
+!*moodle/blocks/ezee_constellate
+!*moodle/blocks/ezee_constellate/**

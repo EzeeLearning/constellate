@@ -159,6 +159,8 @@ class db_query {
         $results = $DB->get_records_sql("SELECT * FROM temp_dates", []);
 
         $DB->execute("DROP TEMPORARY TABLE temp_dates", []);
+		
+		var_dump($results);
 
         return $results;
     }
