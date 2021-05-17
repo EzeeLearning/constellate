@@ -175,7 +175,7 @@ class db_query {
     public function config($email) {
         global $DB;
 
-        $installdate = $DB->get_records_sql("SELECT timeinitial FROM {blocks_ezee_constellate}", []);     
+        $installdate = $DB->get_records_sql("SELECT timeinitial FROM {ezee_constellate}", []);     
         
         if ($installdate) {
             $installdate = array_values($installdate)[0]->timeinitial;
@@ -212,7 +212,7 @@ class db_query {
                 'installdate' => date("Ymd")
             ];
 
-            $DB->execute("INSERT INTO {blocks_ezee_constellate} VALUES (:installdate)", $params);
+            $DB->execute("INSERT INTO {ezee_constellate} VALUES (:installdate)", $params);
             return true;;
         }
     }

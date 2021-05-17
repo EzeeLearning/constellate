@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 
-require $CFG->dirroot . '/blocks/ezee_constellate/classes/db_query.php';
+require $CFG->dirroot . '/blocks/ezee_constellate/classes/ezee_constellate_db.php';
 
 /**
  * Block plugin to show dashboad with course information on staff.
@@ -53,7 +53,7 @@ class block_ezee_constellate extends block_base
 
         // Get information from database.
         $page = $this->page;
-        $dbquery = new db_query;
+        $dbquery = new ezee_constellate_db;
         $email = get_config('block_ezee_constellate', 'email');
         $config = $dbquery->config($email);
         $output;

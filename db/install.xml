@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
   <TABLES>
-    <TABLE NAME="blocks_ezee_constellate" COMMENT="Config">
+    <TABLE NAME="ezee_constellate" COMMENT="Config">
       <FIELDS>
         <FIELD NAME="timeinitial" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
