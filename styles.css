@@ -194,61 +194,6 @@
     color: #797979 !important;
 }
 
-.constellate-matrix-staff-list tr {
-    height: 72px;
-}
-
-.constellate-matrix-staff-list td {
-    height: inherit;
-}
-
-.constellate-matrix-staff-list th a {
-    color: #ffffff !important;
-}
-
-.constellate-matrix-staff-list th i {
-    display: block;
-}
-
-.constellate-matrix-status-cell {
-    padding: 0 !important;
-}
-
-.constellate-matrix-status {
-    position: relative;
-    height: 100%;
-    width: 100%;
-}
-
-.constellate-matrix-status i {
-    position: absolute;
-    width: 28px;
-    height: 28px;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    font-size: 28px;
-    color: #ffffff;
-}
-
-.constellate-matrix-status-show {
-    display: block;
-}
-
-.constellate-matrix-status.status-red {
-    background-color: #ff5d46;
-}
-
-.constellate-matrix-status.status-green {
-    background-color: #55ca4d;
-}
-
-.constellate-matrix-status.status-orange {
-    background-color: #f7ad43;
-}
-
 
 @media screen and (max-width: 600px) {
     .constellate-staff-list {
