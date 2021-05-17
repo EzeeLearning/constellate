@@ -1,5 +1,5 @@
 <a href="https://ezeeconstellate.co.uk" target="_blank">
-  <img src="moodle/blocks/ezee_constellate/constellate.png" alt="Logo" width="200px">
+  <img src="constellate.png" alt="Logo" width="200px">
 </a>
 
 # Ezee Constellate
