@@ -52,7 +52,7 @@ class block_ezee_constellate extends block_base
         global $CFG, $USER, $OUTPUT;
 
         // Get information from database.
-        $page = $this->page;
+        $PAGE = $this->page;
         $dbquery = new db_query;
         $email = get_config('block_ezee_constellate', 'email');
         $config = $dbquery->config($email);
@@ -60,9 +60,9 @@ class block_ezee_constellate extends block_base
 
         if ($config === true) {
             // Add jquery and js files.
-            $page->requires->jquery();
-            $page->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/Chart.bundle.min.js'), true);
-            $page->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/ezee_constellate.js'));
+            $PAGE->requires->jquery();
+            $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/Chart.bundle.min.js'), true);
+            $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/blocks/ezee_constellate/js/ezee_constellate.js'));
 
             $planmode = get_config('block_ezee_constellate', 'learningplan');
             $staffmode = get_config('block_ezee_constellate', 'staffmode');
@@ -79,9 +79,9 @@ class block_ezee_constellate extends block_base
             $activityjson = json_encode(array_values($resultsactivity));
 
             // Pass variables to js file.
-            $page->requires->js_init_call('loadPercentageGraph', $resultssummary);
-            $page->requires->js_init_call('loadCourseGraph', array($coursesjson));
-            $page->requires->js_init_call('loadDateGraph', array($activityjson));
+            $PAGE->requires->js_init_call('loadPercentageGraph', $resultssummary);
+            $PAGE->requires->js_init_call('loadCourseGraph', array($coursesjson));
+            $PAGE->requires->js_init_call('loadDateGraph', array($activityjson));
 
             // Show notifications panel above dashboard with overall percentage.
             $percentage = $resultvalues->completionpercentage > 100 ? 100 : $resultvalues->completionpercentage;
