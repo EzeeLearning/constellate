@@ -21,7 +21,7 @@
  * @copyright  2021 John Stainsby
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class db_query {
+class ezee_constellate_db {
 
     /**
      * Get total number of courses, assigned courses and assigned learning plans for dashboard statistics
